@@ -4,39 +4,46 @@ from dotenv import load_dotenv
 # Load local .env for development
 load_dotenv()
 
+# Support Streamlit Cloud secrets
+try:
+    import streamlit as st
+    _HAS_STREAMLIT = True
+except ImportError:
+    _HAS_STREAMLIT = False
+
 def get_required(key: str) -> str:
+    """Get required config value from environment or Streamlit secrets"""
+    # Try Streamlit secrets first (for Streamlit Cloud)
+    if _HAS_STREAMLIT and hasattr(st, 'secrets') and key in st.secrets:
+        return st.secrets[key]
+    # Fall back to environment variables (for local/other deployments)
     value = os.getenv(key)
     if not value:
         raise RuntimeError(f"Missing required environment variable: {key}")
     return value
 
-def get_optional(key: str):
-    return os.getenv(key)
+def get_optional(key: str, default=None):
+    """Get optional config value from environment or Streamlit secrets"""
+    # Try Streamlit secrets first
+    if _HAS_STREAMLIT and hasattr(st, 'secrets') and key in st.secrets:
+        return st.secrets[key]
+    # Fall back to environment variables
+    return os.getenv(key, default)
 
-# Required shared variables
-SUPABASE_URL = get_required("SB_PROJECT_URL")
-SUPABASE_ANON_KEY = get_required("SB_ANON_KEY")
+# Pinecone (Required)
 PINECONE_API_KEY = get_required("PINECONE_API_KEY")
-PINECONE_INDEX_NAME = get_optional("PINECONE_INDEX_NAME") or "joyful-hickory"
+PINECONE_INDEX_NAME = get_optional("PINECONE_INDEX_NAME", "rag-semantic-384")
 
-# Optional LLM provider keys
+# LLM provider keys (at least one required)
 GEMINI_API_KEY = get_optional("GEMINI_API_KEY")
 GROQ_API_KEY = get_optional("GROQ_API_KEY")
 OPENROUTER_API_KEY = get_optional("OPENROUTER_API_KEY")
-GEMINI_MODEL = get_optional("GEMINI_MODEL") or "gemini-pro?deploy"  # override at deploy time
 
-# Decide provider priority: explicit preference order
-# Uses GEMINI if present, else Groq, else OpenRouter
-ACTIVE_LLM = None
-if GEMINI_API_KEY:
-    ACTIVE_LLM = ("gemini", GEMINI_MODEL, GEMINI_API_KEY)
-elif GROQ_API_KEY:
-    ACTIVE_LLM = ("claude", None, GROQ_API_KEY)
-elif OPENROUTER_API_KEY:
-    ACTIVE_LLM = ("openai", None, OPENROUTER_API_KEY)
+# Model names
+GEMINI_MODEL = get_optional("GEMINI_MODEL", "gemini-2.5-flash")
+GROQ_MODEL = get_optional("GROQ_MODEL", "llama-3.1-8b-instant")
+OPENROUTER_MODEL = get_optional("OPENROUTER_MODEL", "mistralai/mistral-7b-instruct:free")
 
-if not ACTIVE_LLM:
-    raise RuntimeError("No LLM configured: set GEMINI_API_KEY or GROQ_API_KEY or OPENROUTER_API_KEY")
-
-# Expose for code
-LLM_PROVIDER, LLM_MODEL, LLM_KEY = ACTIVE_LLM
+# Supabase (Optional - not used in current deployment)
+SUPABASE_URL = get_optional("SB_PROJECT_URL")
+SUPABASE_ANON_KEY = get_optional("SB_ANON_KEY")
