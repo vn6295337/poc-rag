@@ -34,6 +34,10 @@ This PoC validates three critical capabilities for production RAG systems:
 
 **Try it now:** https://huggingface.co/spaces/vn6295337/rag-poc
 
+### 🎬 Demo Video
+
+https://github.com/vn6295337/poc-rag/assets/demo.webm
+
 **Sample Queries:**
 - "what is GDPR"
 - "what are privacy requirements"
