@@ -17,6 +17,7 @@ def get_optional(key: str):
 SUPABASE_URL = get_required("SB_PROJECT_URL")
 SUPABASE_ANON_KEY = get_required("SB_ANON_KEY")
 PINECONE_API_KEY = get_required("PINECONE_API_KEY")
+PINECONE_INDEX_NAME = get_optional("PINECONE_INDEX_NAME") or "joyful-hickory"
 
 # Optional LLM provider keys
 GEMINI_API_KEY = get_optional("GEMINI_API_KEY")

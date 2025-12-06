@@ -1,9 +1,14 @@
-# poc-rag/ingestion/test_ingestion.py
+# poc-rag/ingestion/cli_ingest.py
 """
-End-to-end ingestion test:
-1. Loads markdown docs.
-2. Chunks them.
-3. Prints summary counts.
+CLI utility for testing ingestion pipeline.
+
+Usage:
+    python ingestion/cli_ingest.py <docs_dir>
+
+Performs end-to-end ingestion test:
+1. Loads markdown docs
+2. Chunks them
+3. Prints summary counts
 """
 
 from load_docs import load_markdown_docs
@@ -14,7 +19,7 @@ import os
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python3 test_ingestion.py <docs_dir>")
+        print("Usage: python ingestion/cli_ingest.py <docs_dir>")
         sys.exit(1)
 
     docs_dir = sys.argv[1]

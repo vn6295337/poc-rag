@@ -6,9 +6,19 @@ __pycache__/
 .env.local
 venv/
 .env.*
+
 # Editor
 .vscode/
 .idea/
 .DS_Store
+
 # System
 *.log
+
+# Data (embeddings, large files - can be regenerated)
+data/
+sample_docs/
+
+# Secrets
+secrets/
+*.key

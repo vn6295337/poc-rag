@@ -1,14 +1,34 @@
 # poc-rag/ingestion/embeddings.py
 """
-Simple embedding-function stub for Day-3.
-- Supports provider names: "openai", "claude", "local"
-- When provider == "local", returns deterministic pseudo-embeddings (no network).
-- Exposes batch_embed_chunks(chunks, provider="local") -> list of dicts with 'chunk', 'embedding' (list[float])
+Embedding generation for RAG pipeline.
+
+Supported providers:
+- "local": Deterministic hash-based embeddings (testing only)
+- "sentence-transformers": Free semantic embeddings using HuggingFace models
+- "openai", "claude": Placeholders for future API-based embeddings
+
+Default model: all-MiniLM-L6-v2 (384 dimensions, good balance of speed/quality)
 """
 
 import hashlib
 import struct
-from typing import List, Dict
+from typing import List, Dict, Optional
+
+# Lazy-load sentence-transformers to avoid import errors if not installed
+_MODEL_CACHE = {}
+
+def _get_sentence_transformer_model(model_name: str = "all-MiniLM-L6-v2"):
+    """Lazy load and cache sentence transformer model."""
+    if model_name not in _MODEL_CACHE:
+        try:
+            from sentence_transformers import SentenceTransformer
+            _MODEL_CACHE[model_name] = SentenceTransformer(model_name)
+        except ImportError:
+            raise ImportError(
+                "sentence-transformers not installed. "
+                "Install with: pip install sentence-transformers"
+            )
+    return _MODEL_CACHE[model_name]
 
 def _pseudo_vector_from_text(text: str, dim: int = 128) -> List[float]:
     """
@@ -29,28 +49,78 @@ def _pseudo_vector_from_text(text: str, dim: int = 128) -> List[float]:
         i += 4
     return vec[:dim]
 
-def get_embedding(text: str, provider: str = "local", dim: int = 128) -> List[float]:
+def get_embedding(
+    text: str,
+    provider: str = "local",
+    dim: int = 128,
+    model_name: Optional[str] = None
+) -> List[float]:
     """
     Provider-agnostic embedding getter.
-    - provider "local": returns pseudo-embedding
-    - provider "openai" / "claude": raises NotImplementedError (placeholder)
+
+    Args:
+        text: Text to embed
+        provider: "local" | "sentence-transformers" | "openai" | "claude"
+        dim: Dimension for local embeddings (ignored for other providers)
+        model_name: Optional model name for sentence-transformers
+
+    Returns:
+        List of floats representing the embedding vector
     """
     provider = provider.lower()
+
     if provider == "local":
         return _pseudo_vector_from_text(text, dim=dim)
+
+    elif provider == "sentence-transformers":
+        model = _get_sentence_transformer_model(model_name or "all-MiniLM-L6-v2")
+        embedding = model.encode(text, convert_to_numpy=True)
+        return embedding.tolist()
+
     elif provider in ("openai", "claude"):
-        raise NotImplementedError(f"Provider '{provider}' is not configured in this stub.")
+        raise NotImplementedError(f"Provider '{provider}' is not configured yet.")
+
     else:
         raise ValueError(f"Unknown provider: {provider}")
 
-def batch_embed_chunks(chunks: List[Dict], provider: str = "local", dim: int = 128) -> List[Dict]:
+def batch_embed_chunks(
+    chunks: List[Dict],
+    provider: str = "local",
+    dim: int = 128,
+    model_name: Optional[str] = None
+) -> List[Dict]:
     """
-    Input: chunks = [{"filename","chunk_id","text","chars"}...]
-    Output: [{"filename","chunk_id","embedding","chars"}...]
+    Batch embed multiple chunks.
+
+    Args:
+        chunks: List of dicts with "filename", "chunk_id", "text", "chars"
+        provider: Embedding provider
+        dim: Dimension for local embeddings
+        model_name: Optional model name for sentence-transformers
+
+    Returns:
+        List of dicts with "filename", "chunk_id", "embedding", "chars"
     """
+    # For sentence-transformers, batch encoding is more efficient
+    if provider == "sentence-transformers":
+        texts = [c["text"] for c in chunks]
+        model = _get_sentence_transformer_model(model_name or "all-MiniLM-L6-v2")
+        embeddings = model.encode(texts, convert_to_numpy=True, show_progress_bar=True)
+
+        out = []
+        for i, c in enumerate(chunks):
+            out.append({
+                "filename": c["filename"],
+                "chunk_id": c["chunk_id"],
+                "embedding": embeddings[i].tolist(),
+                "chars": c["chars"]
+            })
+        return out
+
+    # For other providers, embed one at a time
     out = []
     for c in chunks:
-        emb = get_embedding(c["text"], provider=provider, dim=dim)
+        emb = get_embedding(c["text"], provider=provider, dim=dim, model_name=model_name)
         out.append({
             "filename": c["filename"],
             "chunk_id": c["chunk_id"],
