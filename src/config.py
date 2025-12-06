@@ -14,8 +14,13 @@ except ImportError:
 def get_required(key: str) -> str:
     """Get required config value from environment or Streamlit secrets"""
     # Try Streamlit secrets first (for Streamlit Cloud)
-    if _HAS_STREAMLIT and hasattr(st, 'secrets') and key in st.secrets:
-        return st.secrets[key]
+    if _HAS_STREAMLIT and hasattr(st, 'secrets'):
+        try:
+            if key in st.secrets:
+                return st.secrets[key]
+        except Exception:
+            pass  # Secrets not configured, fall back to env vars
+
     # Fall back to environment variables (for local/other deployments)
     value = os.getenv(key)
     if not value:
@@ -25,8 +30,13 @@ def get_required(key: str) -> str:
 def get_optional(key: str, default=None):
     """Get optional config value from environment or Streamlit secrets"""
     # Try Streamlit secrets first
-    if _HAS_STREAMLIT and hasattr(st, 'secrets') and key in st.secrets:
-        return st.secrets[key]
+    if _HAS_STREAMLIT and hasattr(st, 'secrets'):
+        try:
+            if key in st.secrets:
+                return st.secrets[key]
+        except Exception:
+            pass  # Secrets not configured, fall back to env vars
+
     # Fall back to environment variables
     return os.getenv(key, default)
 
