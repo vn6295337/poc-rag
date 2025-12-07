@@ -12,7 +12,7 @@
 ## Executive Summary
 
 ### Challenge
-Build a cost-effective, production-ready Retrieval-Augmented Generation (RAG) system that demonstrates:
+Build a free-to-use, production-ready Retrieval-Augmented Generation (RAG) system for personal use that demonstrates:
 - Accurate semantic search over domain-specific documents
 - Reliable LLM-powered question answering with source attribution
 - Deployment readiness on cloud infrastructure
@@ -27,14 +27,14 @@ Developed a complete RAG pipeline combining:
 
 ### Key Results
 
-| Metric | Result | Industry Benchmark |
-|--------|--------|-------------------|
-| **Retrieval Accuracy** | 100% (5/5 test queries) | 70-85% typical |
-| **Total Cost** | $0/month | $50-200/month typical |
-| **Development Time** | 7 days | 2-4 weeks typical |
-| **Deployment Success** | 4th platform attempt | Often 1-2 attempts |
-| **Cold Start Time** | 30-60s | 10-30s typical |
-| **Warm Query Latency** | 2-5s | 3-8s typical |
+| Metric                 | Result                  |
+| ---------------------- | ----------------------- |
+| **Retrieval Accuracy** | 100% (5/5 test queries) |
+| **Total Cost**         | $0/month                |
+| **Development Time**   | 7 days                  |
+| **Deployment Success** | 4th platform attempt    |
+| **Cold Start Time**    | 30-60s                  |
+| **Warm Query Latency** | 2-5s                    |
 
 ### Business Impact
 - ✅ **Production-ready system** deployed and accessible at public URL
@@ -53,7 +53,7 @@ Organizations need RAG systems to:
 - Answer questions using internal/domain-specific knowledge bases
 - Provide source attribution for compliance and trust
 - Scale to thousands of documents without manual maintenance
-- Operate cost-effectively (ideally <$100/month)
+- Free to use
 
 **Challenges**:
 1. **Accuracy**: Generic keyword search yields 40-60% accuracy on domain queries
@@ -65,26 +65,26 @@ Organizations need RAG systems to:
 ### 1.2 Requirements
 
 #### Functional Requirements
-- [x] Ingest markdown documents (5-10 pages each)
-- [x] Chunk documents into semantically meaningful units
-- [x] Generate semantic embeddings (not simple keyword matching)
-- [x] Retrieve top-K relevant chunks for any query
-- [x] Generate natural language answers with citations
-- [x] Interactive UI for end-user queries
+- ✅ Ingest markdown documents (5-10 pages each)
+- ✅ Chunk documents into semantically meaningful units
+- ✅ Generate semantic embeddings (not simple keyword matching)
+- ✅ Retrieve top-K relevant chunks for any query
+- ✅ Generate natural language answers with citations
+- ✅ Interactive UI for end-user queries
 
 #### Non-Functional Requirements
-- [x] **Accuracy**: >90% retrieval accuracy on test queries
-- [x] **Cost**: <$10/month (target: $0)
-- [x] **Latency**: <10s for warm queries
-- [x] **Reliability**: >95% uptime
-- [x] **Scalability**: Support 100+ documents (1000+ chunks)
-- [x] **Portability**: Deploy to multiple platforms without code changes
+- ✅ **Accuracy**: >90% retrieval accuracy on test queries
+- ✅ **Cost**: <$10/month (target: $0)
+- ✅ **Latency**: <10s for warm queries
+- ✅ **Reliability**: >95% uptime
+- ✅ **Scalability**: Support 100+ documents (1000+ chunks)
+- ✅ **Portability**: Deploy to multiple platforms without code changes
 
 #### Success Criteria
-- [x] Achieve 100% accuracy on GDPR test queries
-- [x] Deploy to production with public URL
-- [x] Complete within 2 weeks (achieved in 7 days)
-- [x] Operate on free-tier infrastructure
+- ✅ Achieve 100% accuracy on GDPR test queries
+- ✅ Deploy to production with public URL
+- ✅ Complete within 2 weeks (achieved in 7 days)
+- ✅ Operate on free-tier infrastructure
 
 ---
 
@@ -196,11 +196,11 @@ Organizations need RAG systems to:
 3. **Quality-speed trade-off**: Gemini (best quality), Groq (fastest), OpenRouter (backup)
 
 **Provider Comparison**:
-| Provider | Model | Free Tier | Latency | Quality |
+| Provider | Model | Free Tier | Latency |
 |----------|-------|-----------|---------|---------|
-| Gemini | 2.5 Flash | 15 RPM | 3-5s | ⭐⭐⭐⭐⭐ |
-| Groq | llama-3.1-8b | 30 RPM | 1-3s | ⭐⭐⭐⭐ |
-| OpenRouter | Mistral 7B | Varies | 5-10s | ⭐⭐⭐ |
+| Gemini | 2.5 Flash | 15 RPM | 3-5s |
+| Groq | llama-3.1-8b | 30 RPM | 1-3s |
+| OpenRouter | Mistral 7B | Varies | 5-10s |
 
 **Real-World Impact**:
 - Day 5: Gemini key malformed → Groq fallback saved deployment
