@@ -2,7 +2,7 @@
 
 > **Building a Production-Ready Retrieval-Augmented Generation System in 7 Days**
 >
-> **Project**: poc-rag
+> **Project**: RAG-document-assistant
 > **Timeline**: December 1-7, 2025
 > **Status**: Production-Deployed
 > **Live Demo**: https://huggingface.co/spaces/vn6295337/rag-poc
@@ -1199,7 +1199,7 @@ torch
 ### B. Repository Structure
 
 ```
-poc-rag/
+RAG-document-assistant/
 ├── app.py                    # HF Spaces entry point
 ├── ui/app.py                 # Local UI
 ├── src/
@@ -1235,8 +1235,8 @@ poc-rag/
 
 **Live Links**:
 - **Production Deployment**: https://huggingface.co/spaces/vn6295337/rag-poc
-- **Source Code**: https://github.com/vn6295337/poc-rag
-- **Demo Video**: https://github.com/vn6295337/poc-rag/blob/main/docs/demo.mp4
+- **Source Code**: https://github.com/vn6295337/RAG-document-assistant
+- **Demo Video**: https://github.com/vn6295337/RAG-document-assistant/blob/main/docs/demo.mp4
 
 **Documentation**:
 - [Architecture Guide](architecture.md)

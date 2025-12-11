@@ -2,7 +2,7 @@
 
 > **Version**: 1.0
 > **Last Updated**: December 7, 2025
-> **Project**: poc-rag
+> **Project**: RAG-document-assistant
 
 ---
 
@@ -29,7 +29,7 @@
 **Completed**:
 -  Created GCP project (`ai-portfolio-v2`)
 -  Installed and authenticated `gcloud` CLI
--  Created GitHub repository: `poc-rag`
+-  Created GitHub repository: `RAG-document-assistant`
 -  Set up Python virtual environment (`~/aienv`)
 -  Configured local secrets storage (`~/secrets/`)
 -  Obtained API keys: Gemini, Groq, OpenRouter, Pinecone
@@ -487,7 +487,7 @@ Chunk 2 [1000-2200]: "...organizations must... [boundary] ...data protection."
 ### Project Structure
 
 ```
-poc-rag/
+RAG-document-assistant/
  app.py                    # HF Spaces entry point
  ui/app.py                 # Local development UI
  src/
@@ -504,7 +504,7 @@ poc-rag/
  retrieval/
     retriever.py          # Semantic search P
     test_retrieval.py     # Retrieval testing
- scripts/
+ src/scripts/
     regenerate_with_semantic.py  # Batch re-embedding
  data/
     chunks.jsonl          # Original hash-based chunks
@@ -1250,7 +1250,7 @@ fi
 - **Architecture**: [docs/architecture.md](architecture.md)
 - **Operations**: [docs/run.md](run.md)
 - **Test Results**: [docs/test_results.md](test_results.md)
-- **Repository**: https://github.com/vn6295337/poc-rag
+- **Repository**: https://github.com/vn6295337/RAG-document-assistant
 - **Live Demo**: https://huggingface.co/spaces/vn6295337/rag-poc
 
 ---

@@ -1,4 +1,4 @@
-# poc-rag/ingestion/search_local.py
+# RAG-document-assistant/ingestion/search_local.py
 """
 Local similarity search (cosine) over embeddings.jsonl.
 

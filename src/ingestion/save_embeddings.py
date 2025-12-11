@@ -1,7 +1,7 @@
-# poc-rag/ingestion/save_embeddings.py
+# RAG-document-assistant/ingestion/save_embeddings.py
 """
 Persist chunk embeddings to a local JSONL file for later import.
-Outputs: poc-rag/ingestion/data/embeddings.jsonl
+Outputs: RAG-document-assistant/ingestion/data/embeddings.jsonl
 Each line is a JSON object:
 {
   "id": "<filename>::<chunk_id>",

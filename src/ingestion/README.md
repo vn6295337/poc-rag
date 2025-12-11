@@ -11,7 +11,7 @@ Files:
 - search_local.py     : Local cosine-similarity retrieval against embeddings.jsonl
 - data/embeddings.jsonl : Generated embeddings (JSONL)
 
-Quick run (from `poc-rag/ingestion`, with `aienv` active):
+Quick run (from `RAG-document-assistant/ingestion`, with `aienv` active):
 
 1. Activate venv:
    source ~/aienv/bin/activate
@@ -29,5 +29,5 @@ Quick run (from `poc-rag/ingestion`, with `aienv` active):
    python3 search_local.py data/embeddings.jsonl "your query" 3 64
 
 Notes:
-- Replace `/full/path/to/your/markdown_folder` with your real path (e.g. /home/vn6295337/poc-rag/sample_docs).
+- Replace `/full/path/to/your/markdown_folder` with your real path (e.g. /home/vn6295337/RAG-document-assistant/sample_docs).
 - This pipeline uses a local pseudo-embedding for offline testing. Replace provider branches when ready to use real APIs.

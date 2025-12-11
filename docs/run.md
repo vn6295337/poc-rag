@@ -2,7 +2,7 @@
 
 > **Version**: 1.0
 > **Last Updated**: December 7, 2025
-> **Project**: poc-rag
+> **Project**: RAG-document-assistant
 
 ---
 
@@ -90,8 +90,8 @@ jq (for JSON parsing)
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/vn6295337/poc-rag.git
-cd poc-rag
+git clone https://github.com/vn6295337/RAG-document-assistant.git
+cd RAG-document-assistant
 ```
 
 ### 2. Create Virtual Environment
@@ -266,7 +266,7 @@ gcloud run deploy rag-poc \
 ```bash
 docker run -e PINECONE_API_KEY=your_key \
            -e GEMINI_API_KEY=your_key \
-           poc-rag:latest
+           rag-document-assistant:latest
 ```
 
 ---
@@ -288,7 +288,7 @@ ls sample_docs/
 
 ```bash
 # Test document loader
-python ingestion/load_docs.py sample_docs/
+python src/ingestion/load_docs.py sample_docs/
 
 # Expected output:
 # FILENAME                                 STATUS         CHARS    WORDS
@@ -345,7 +345,7 @@ print(f'Dimension: {stats.get(\"dimension\", \"N/A\")}')
 
 ```bash
 # Test semantic search
-python retrieval/test_retrieval.py "what is GDPR"
+python tests/test_retrieval.py "what is GDPR"
 
 # Expected output:
 # Query: "what is GDPR"
@@ -367,7 +367,7 @@ python retrieval/test_retrieval.py "what is GDPR"
 source venv/bin/activate
 
 # Run Streamlit app (local UI)
-streamlit run ui/app.py
+streamlit run src/ui/app.py
 
 # Expected output:
 # You can now view your Streamlit app in your browser.
@@ -395,10 +395,10 @@ git clone https://huggingface.co/spaces/vn6295337/rag-poc hf-rag-poc
 cd hf-rag-poc
 
 # 2. Copy updated files
-cp ../poc-rag/app.py .
-cp ../poc-rag/src/*.py src/
-cp ../poc-rag/retrieval/*.py retrieval/
-cp ../poc-rag/ingestion/*.py ingestion/
+cp ../RAG-document-assistant/app.py .
+cp ../RAG-document-assistant/src/*.py src/
+cp ../RAG-document-assistant/retrieval/*.py retrieval/
+cp ../RAG-document-assistant/ingestion/*.py ingestion/
 
 # 3. Commit and push
 git add .
@@ -412,7 +412,7 @@ git push
 
 ```bash
 # Run as background service with nohup
-nohup streamlit run ui/app.py \
+nohup streamlit run src/ui/app.py \
   --server.port=8501 \
   --server.headless=true \
   > streamlit.log 2>&1 &
@@ -462,7 +462,7 @@ python retrieval/test_retrieval.py "how does data protection work"
 
 ```bash
 # Test document loading only
-python ingestion/load_docs.py sample_docs/
+python src/ingestion/load_docs.py sample_docs/
 
 # Test chunking only
 python -c "
@@ -533,15 +533,15 @@ curl -X POST \
 
 3. **Copy Project Files**
    ```bash
-   # From your local poc-rag directory
-   cp /path/to/poc-rag/app.py .
-   cp /path/to/poc-rag/Dockerfile .
-   cp /path/to/poc-rag/start-app.sh .
-   cp /path/to/poc-rag/requirements.txt .
-   cp -r /path/to/poc-rag/src .
-   cp -r /path/to/poc-rag/retrieval .
-   cp -r /path/to/poc-rag/ingestion .
-   cp -r /path/to/poc-rag/data .
+   # From your local RAG-document-assistant directory
+   cp /path/to/RAG-document-assistant/app.py .
+   cp /path/to/RAG-document-assistant/Dockerfile .
+   cp /path/to/RAG-document-assistant/start-app.sh .
+   cp /path/to/RAG-document-assistant/requirements.txt .
+   cp -r /path/to/RAG-document-assistant/src .
+   cp -r /path/to/RAG-document-assistant/retrieval .
+   cp -r /path/to/RAG-document-assistant/ingestion .
+   cp -r /path/to/RAG-document-assistant/data .
    ```
 
 4. **Configure Secrets**
@@ -651,7 +651,7 @@ curl -X POST \
 2. **Deploy on Streamlit Cloud**
    - Go to https://share.streamlit.io/
    - Click "New app"
-   - Select repository: `your-username/poc-rag`
+   - Select repository: `your-username/RAG-document-assistant`
    - Main file path: `ui/app.py`
    - Click "Deploy"
 
@@ -679,7 +679,7 @@ curl -X POST \
 #### Local Development
 ```bash
 # Streamlit logs to console
-streamlit run ui/app.py
+streamlit run src/ui/app.py
 
 # View logs in terminal
 # Errors appear with traceback
@@ -924,7 +924,7 @@ echo "GEMINI_API_KEY=new_key_here" >> .env
 
 # Restart application
 pkill -f streamlit
-streamlit run ui/app.py
+streamlit run src/ui/app.py
 ```
 
 ### 3. Switch Pinecone Index
@@ -1149,7 +1149,7 @@ Before deploying to production:
 - **Architecture**: [docs/architecture.md](architecture.md)
 - **Implementation**: [docs/implement.md](implement.md)
 - **Test Results**: [docs/test_results.md](test_results.md)
-- **Repository**: https://github.com/vn6295337/poc-rag
+- **Repository**: https://github.com/vn6295337/RAG-document-assistant
 - **Live Demo**: https://huggingface.co/spaces/vn6295337/rag-poc
 
 ---

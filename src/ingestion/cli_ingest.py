@@ -1,4 +1,4 @@
-# poc-rag/ingestion/cli_ingest.py
+# RAG-document-assistant/ingestion/cli_ingest.py
 """
 CLI utility for testing ingestion pipeline.
 
@@ -11,8 +11,8 @@ Performs end-to-end ingestion test:
 3. Prints summary counts
 """
 
-from load_docs import load_markdown_docs
-from chunker import chunk_documents
+from src.ingestion.load_docs import load_markdown_docs
+from src.ingestion.chunker import chunk_documents
 
 import sys
 import os

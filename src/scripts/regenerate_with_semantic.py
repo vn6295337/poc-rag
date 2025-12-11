@@ -24,9 +24,9 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from ingestion.load_docs import load_markdown_docs
-from ingestion.chunker import chunk_documents
-from ingestion.embeddings import batch_embed_chunks, get_embedding
+from src.ingestion.load_docs import load_markdown_docs
+from src.ingestion.chunker import chunk_documents
+from src.ingestion.embeddings import batch_embed_chunks, get_embedding
 from pinecone import Pinecone, ServerlessSpec
 import src.config as cfg
 import json
@@ -146,7 +146,7 @@ def main():
     print("=" * 60)
     print(f"\nNext steps:")
     print(f"1. Update config: export PINECONE_INDEX_NAME='{new_index_name}'")
-    print(f"2. Test search: python -c \"from retrieval.retriever import query_pinecone; print(query_pinecone('what is GDPR', top_k=5))\"")
+    print(f"2. Test search: python -c \"from src.retrieval.retriever import query_pinecone; print(query_pinecone('what is GDPR', top_k=5))\"")
     print()
 
 

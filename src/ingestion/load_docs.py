@@ -1,4 +1,4 @@
-# poc-rag/ingestion/load_docs.py
+# RAG-document-assistant/ingestion/load_docs.py
 """
 Simple markdown document loader for Day-3 ingestion step.
 

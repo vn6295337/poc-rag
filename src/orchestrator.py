@@ -2,8 +2,8 @@
 from typing import List, Dict, Any
 import re
 import src.config as cfg
-from ingestion.embeddings import get_embedding  # provider-agnostic embedding fn used for ingestion
-from retrieval.retriever import query_pinecone as pinecone_search, deterministic_embedding
+from src.ingestion.embeddings import get_embedding  # provider-agnostic embedding fn used for ingestion
+from src.retrieval.retriever import query_pinecone as pinecone_search, deterministic_embedding
 
 # -------------------------
 # Citation snippet enrichment

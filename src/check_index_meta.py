@@ -1,4 +1,4 @@
-# poc-rag/src/check_index_meta.py
+# RAG-document-assistant/src/check_index_meta.py
 """
 Check Pinecone index metadata using pinecone>=5.x SDK.
 Ensures dimension and metric match your ingestion pipeline.

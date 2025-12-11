@@ -1,4 +1,4 @@
-# poc-rag/ingestion/chunker.py
+# RAG-document-assistant/ingestion/chunker.py
 """
 Text chunking utility for RAG ingestion.
 Inputs: list of docs from load_docs.py

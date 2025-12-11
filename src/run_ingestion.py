@@ -20,9 +20,9 @@ PROJECT_ROOT = SCRIPT_DIR.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from ingestion.load_docs import load_markdown_docs
-from ingestion.chunker import chunk_documents
-from ingestion.embeddings import batch_embed_chunks
+from src.ingestion.load_docs import load_markdown_docs
+from src.ingestion.chunker import chunk_documents
+from src.ingestion.embeddings import batch_embed_chunks
 
 def run_ingestion(docs_dir: str, provider: str = "local", dim: int = 128, save_to: str = None):
     """

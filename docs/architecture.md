@@ -2,7 +2,7 @@
 
 > **Version**: 1.0
 > **Last Updated**: December 7, 2025
-> **Project**: poc-rag
+> **Project**: RAG-document-assistant
 
 ---
 
@@ -157,21 +157,21 @@ This RAG (Retrieval-Augmented Generation) proof-of-concept demonstrates a produc
 
 ## Component Breakdown
 
-### 1. Ingestion Pipeline (`ingestion/`)
+### 1. Ingestion Pipeline (`src/src/ingestion/`)
 
 #### 1.1 Document Loader (`load_docs.py`)
 
 **Purpose**: Load and clean markdown documents
 
 **Key Functions**:
-- `load_markdown_docs(dir_path, ext='.md', max_chars=20000)` - ingestion/load_docs.py:34
+- `load_markdown_docs(dir_path, ext='.md', max_chars=20000)` - src/ingestion/load_docs.py:34
   - Loads all markdown files from directory
   - Cleans markdown syntax (code blocks, HTML, links)
   - Returns list of `{filename, path, text, chars, words, status}`
 
 **Cleaning Operations**:
 ```python
-# ingestion/load_docs.py:20-32
+# src/ingestion/load_docs.py:20-32
 1. Remove code fences: ```...```
 2. Remove HTML tags: <tag>...</tag>
 3. Remove images/links but keep text
@@ -190,10 +190,10 @@ This RAG (Retrieval-Augmented Generation) proof-of-concept demonstrates a produc
 **Purpose**: Split documents into manageable chunks for embedding
 
 **Key Functions**:
-- `chunk_text(text, max_tokens=300, overlap=50)` - ingestion/chunker.py:10
+- `chunk_text(text, max_tokens=300, overlap=50)` - src/ingestion/chunker.py:10
   - Approximates tokens as chars/4
   - Creates overlapping windows
-- `chunk_documents(docs, max_tokens=300, overlap=50)` - ingestion/chunker.py:39
+- `chunk_documents(docs, max_tokens=300, overlap=50)` - src/ingestion/chunker.py:39
   - Batch processes multiple documents
   - Returns `{filename, chunk_id, text, chars}`
 
@@ -216,24 +216,24 @@ Rationale:
 **Purpose**: Convert text chunks into vector embeddings
 
 **Providers Supported**:
-1. **sentence-transformers** (production) - ingestion/embeddings.py:75
+1. **sentence-transformers** (production) - src/ingestion/embeddings.py:75
    - Model: `all-MiniLM-L6-v2`
    - Dimensions: 384
    - Speed: ~200ms per batch (CPU)
    - Cost: $0 (local inference)
 
-2. **local** (development/testing) - ingestion/embeddings.py:72
+2. **local** (development/testing) - src/ingestion/embeddings.py:72
    - Deterministic SHA-256 hashing
    - Useful for pipeline testing without ML dependencies
 
 **Key Functions**:
-- `get_embedding(text, provider, dim, model_name)` - ingestion/embeddings.py:52
+- `get_embedding(text, provider, dim, model_name)` - src/ingestion/embeddings.py:52
   - Provider-agnostic interface
-- `batch_embed_chunks(chunks, provider)` - ingestion/embeddings.py:86
+- `batch_embed_chunks(chunks, provider)` - src/ingestion/embeddings.py:86
   - Efficient batch encoding (10x faster than sequential)
   - Shows progress bar for long operations
 
-**Model Caching**: ingestion/embeddings.py:18-31
+**Model Caching**: src/ingestion/embeddings.py:18-31
 ```python
 # Lazy-load to minimize startup time
 # Cache to avoid re-loading on each call
@@ -247,24 +247,24 @@ def _get_sentence_transformer_model(model_name):
 
 ---
 
-### 2. Retrieval System (`retrieval/`)
+### 2. Retrieval System (`src/src/retrieval/`)
 
 #### 2.1 Retriever (`retriever.py`)
 
 **Purpose**: Query Pinecone index for semantically similar chunks
 
 **Key Functions**:
-- `semantic_embedding(text, model_name)` - retrieval/retriever.py:37
+- `semantic_embedding(text, model_name)` - src/retrieval/retriever.py:37
   - Generates 384-dim embedding for query
   - Uses same model as ingestion (consistency critical)
 
-- `query_pinecone(query_text, top_k, index_name, use_semantic)` - retrieval/retriever.py:83
+- `query_pinecone(query_text, top_k, index_name, use_semantic)` - src/retrieval/retriever.py:83
   - Connects to Pinecone serverless index
   - Returns top-K matches with scores and metadata
 
 **Retrieval Flow**:
 ```python
-# retrieval/retriever.py:134-161
+# src/retrieval/retriever.py:134-161
 1. Generate query embedding (semantic_embedding)
 2. Connect to Pinecone index (pc.Index(host))
 3. Query with cosine similarity (index.query)
@@ -278,7 +278,7 @@ def _get_sentence_transformer_model(model_name):
 - **Dimension**: 384 (matches all-MiniLM-L6-v2 output)
 - **Mode**: Serverless (pay-per-request, auto-scaling)
 
-**Response Normalization**: retrieval/retriever.py:148-160
+**Response Normalization**: src/retrieval/retriever.py:148-160
 ```python
 # Handles both object attributes and dict keys
 for m in matches:
@@ -459,13 +459,13 @@ OPENROUTER_MODEL = "mistralai/mistral-7b-instruct:free"
 
 ---
 
-### 6. User Interface (`app.py`, `ui/app.py`)
+### 6. User Interface (`app.py`, `src/ui/app.py`)
 
 **Purpose**: Interactive query interface using Streamlit
 
 **Two Entry Points**:
 1. `app.py` - Root-level entry point (required for HF Spaces)
-2. `ui/app.py` - Local development entry point
+2. `src/ui/app.py` - Local development entry point
 
 **UI Components**:
 ```python
@@ -977,7 +977,7 @@ pinecone==5.0.1  # Specific version, not >=
 
 ## References
 
-- **Code Repository**: https://github.com/vn6295337/poc-rag
+- **Code Repository**: https://github.com/vn6295337/RAG-document-assistant
 - **Live Demo**: https://huggingface.co/spaces/vn6295337/rag-poc
 - **Documentation**:
   - Implementation Guide: [docs/implement.md](implement.md)

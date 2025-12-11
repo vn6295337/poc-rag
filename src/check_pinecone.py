@@ -1,4 +1,4 @@
-# poc-rag/src/check_pinecone.py
+# RAG-document-assistant/src/check_pinecone.py
 """
 Pinecone connectivity check for pinecone>=5.x SDK.
 

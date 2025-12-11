@@ -1,4 +1,4 @@
-# poc-rag/ingestion/embeddings.py
+# RAG-document-assistant/ingestion/embeddings.py
 """
 Embedding generation for RAG pipeline.
 
