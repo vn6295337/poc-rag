@@ -3,13 +3,12 @@
 > **Elevator Pitch:** RAG system that demonstrates end-to-end semantic search, vector indexing, and LLM-powered question answering with full source attribution.
 
 [![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Hugging%20Face-yellow)](https://huggingface.co/spaces/vn6295337/rag-poc)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/vn6295337/RAG-document-assistant)
 [![Python](https://img.shields.io/badge/Python-3.11+-green)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
 
-## 🏆 Key Results & Value Proposition
+## ✨ Key Results & Value Proposition
 
 This PoC was developed to demonstrate cost-effective, high-accuracy RAG system that overcomes common implementation challenges.
 
@@ -22,7 +21,7 @@ This PoC was developed to demonstrate cost-effective, high-accuracy RAG system t
 
 ---
 
-## 🎯 Core Capabilities (What This Proves)
+## ✨ Core Capabilities (What This Proves)
 
 This PoC validates three critical capabilities essential for any production RAG system:
 
@@ -43,7 +42,7 @@ This PoC validates three critical capabilities essential for any production RAG 
 
 ---
 
-## 🚀 Live Demo & Usage
+## ✨ Live Demo & Usage
 
 **Experience the RAG system in a production environment:**
 
@@ -60,7 +59,7 @@ This PoC validates three critical capabilities essential for any production RAG 
 
 ---
 
-## ⚡ Quick Start: Run Locally in 5 Minutes
+## ✨ Quick Start: Run Locally in 5 Minutes
 
 ### Prerequisites
 - Python 3.11+
@@ -93,7 +92,7 @@ Visit `http://localhost:8501` and start querying!
 
 ---
 
-## 🏗️ Architecture Overview
+## ✨ Architecture Overview
 
 The RAG system is a two-phase process: an offline **Ingestion Pipeline** (loading and embedding documents) and a real-time **Query Pipeline**.
 
@@ -148,22 +147,22 @@ The RAG system is a two-phase process: an offline **Ingestion Pipeline** (loadin
 ## ✨ Features
 
 ### Core Capabilities
-- ✅ **Semantic Document Retrieval** - Free, local embeddings with 100% accuracy
-- ✅ **Multi-Provider LLM Support** - Automatic fallback across 3 providers
-- ✅ **Citation Tracking** - Full source attribution with similarity scores
-- ✅ **Real-Time Query Interface** - Interactive Streamlit UI
-- ✅ **Debug Mode** - Complete pipeline visibility
+- **Semantic Document Retrieval** - Free, local embeddings with 100% accuracy
+- **Multi-Provider LLM Support** - Automatic fallback across 3 providers
+- **Citation Tracking** - Full source attribution with similarity scores
+- **Real-Time Query Interface** - Interactive Streamlit UI
+- **Debug Mode** - Complete pipeline visibility
 
 ### Technical Highlights
-- 🚀 **Fast** - 2-5s query response time (after cold start)
-- 💰 **Cost-Effective** - $0/month with free tier APIs
-- 🔒 **Secure** - Environment-based secret management
-- 📦 **Portable** - Docker containerization
-- 🎯 **Accurate** - 100% retrieval accuracy on test queries
+- **Fast** - 2-5s query response time (after cold start)
+- **Cost-Effective** - $0/month with free tier APIs
+- **Secure** - Environment-based secret management
+- **Portable** - Docker containerization
+- **Accurate** - 100% retrieval accuracy on test queries
 
 ---
 
-## 🛠️ Tech Stack
+## ✨ Tech Stack
 
 ### Core Technologies
 - **Language**: Python 3.11
@@ -184,7 +183,7 @@ torch  # PyTorch for embeddings
 
 ---
 
-## 📂 Project Structure
+## ✨ Project Structure
 
 ```
 RAG-document-assistant/
@@ -223,7 +222,7 @@ RAG-document-assistant/
 
 ---
 
-## 🚀 Deployment
+## ✨ Deployment
 
 ### Supported Platforms
 
@@ -244,7 +243,7 @@ RAG-document-assistant/
 
 ---
 
-## 🧪 Testing
+## ✨ Testing
 
 ### Local Testing
 ```bash
@@ -267,7 +266,7 @@ See [LOCAL_TEST_RESULTS.md](LOCAL_TEST_RESULTS.md) for detailed test logs.
 
 ---
 
-## 📊 Performance Metrics
+## ✨ Performance Metrics
 
 | Metric | Value | Notes |
 |--------|-------|-------|
@@ -280,7 +279,7 @@ See [LOCAL_TEST_RESULTS.md](LOCAL_TEST_RESULTS.md) for detailed test logs.
 
 ---
 
-## 🔧 Configuration
+## ✨ Configuration
 
 ### Environment Variables
 
@@ -305,10 +304,10 @@ OPENROUTER_MODEL=mistralai/mistral-7b-instruct:free
 ### Multi-Platform Support
 
 The configuration system supports:
-- ✅ Streamlit secrets (Streamlit Cloud)
-- ✅ Environment variables (Docker, Cloud Run, HF Spaces)
-- ✅ .env files (local development)
-- ✅ Graceful fallbacks across all platforms
+- Streamlit secrets (Streamlit Cloud)
+- Environment variables (Docker, Cloud Run, HF Spaces)
+- .env files (local development)
+- Graceful fallbacks across all platforms
 
 ---
 
@@ -325,7 +324,7 @@ The configuration system supports:
 
 ---
 
-## 📚 Full Documentation
+## ✨ Full Documentation
 
 For a deep dive into the system's development journey, design decisions, and testing, please consult the full documentation:
 
@@ -341,16 +340,8 @@ See the [Project Structure](#-project-structure) section above for detailed file
 
 ---
 
-## 🤝 Contributing
+## ✨ Contributing
 
 This is a proof-of-concept project. Feel free to fork and adapt for your use case!
 
 ---
-
-## 📄 License
-
-MIT License - See [LICENSE](LICENSE) file for details
-
-
----
-
