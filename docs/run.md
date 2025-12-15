@@ -3,6 +3,7 @@
 > **Version**: 1.0
 > **Last Updated**: December 7, 2025
 > **Project**: RAG-document-assistant
+> **Focus**: Setup, configuration, and deployment instructions
 
 ---
 
@@ -24,6 +25,12 @@
 ---
 
 ## Prerequisites
+
+### Document Purpose
+
+This document provides operational guidance for setting up, configuring, deploying, and maintaining the RAG system. It is intended for DevOps engineers, system administrators, and operators who need to deploy and maintain the system.
+
+For architectural details, see [Architecture](architecture.md). For implementation details, see [Implementation Guide](implement.md).
 
 ### System Requirements
 
@@ -302,7 +309,7 @@ python src/ingestion/load_docs.py sample_docs/
 
 ```bash
 # Run complete ingestion
-python src/run_ingestion.py
+python src/scripts/run_ingestion.py
 
 # Expected output:
 # Loading documents from sample_docs/...
@@ -905,7 +912,7 @@ def orchestrate_query(query, top_k=3):
 cp new_document.md sample_docs/
 
 # 2. Re-run ingestion
-python src/run_ingestion.py
+python src/scripts/run_ingestion.py
 
 # 3. Verify new chunks
 python -c "
@@ -935,7 +942,7 @@ streamlit run src/ui/app.py
 echo "PINECONE_INDEX_NAME=new-index-name" >> .env
 
 # Re-run ingestion to populate new index
-python src/run_ingestion.py
+python src/scripts/run_ingestion.py
 ```
 
 ### 4. Clear Model Cache
@@ -1158,4 +1165,3 @@ Before deploying to production:
 **Last Updated**: December 7, 2025
 **Authors**: Built with Claude Code
 **License**: MIT
-

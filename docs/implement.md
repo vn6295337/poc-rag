@@ -3,6 +3,7 @@
 > **Version**: 1.0
 > **Last Updated**: December 7, 2025
 > **Project**: RAG-document-assistant
+> **Focus**: Code organization and implementation details
 
 ---
 
@@ -22,6 +23,12 @@
 ---
 
 ## Development Timeline
+
+### Document Purpose
+
+This document provides a detailed account of the implementation process, including development timeline, key decisions, code organization, and lessons learned. It is intended for developers who want to understand how the system was built and the rationale behind key implementation choices.
+
+For architectural details, see [Architecture](architecture.md). For operational procedures, see [Operations Runbook](run.md).
 
 ### Day 1  Environment Setup & Foundation
 **Goal**: Establish development environment and infrastructure
@@ -173,7 +180,7 @@ if st.button("Run Query"):
 
 **Completed**:
 -  Removed duplicate helper functions from `src/orchestrator.py`
--  Fixed `src/run_ingestion.py` import paths
+-  Fixed `src/scripts/run_ingestion.py` import paths
 -  Regenerated `data/chunks.jsonl` with complete text (44 chunks)
 -  Refactored core retrieval logic into `retrieval/retriever.py`
 -  Externalized Pinecone configuration to `src/config.py`
@@ -338,17 +345,17 @@ return embedding.tolist()  # 384 dimensions
 
 ### 2. Why Multi-Provider LLM Cascade
 
-**Decision**: Implement Gemini ' Groq ' OpenRouter ' Local fallback
+**Decision**: Implement Gemini → Groq → OpenRouter → Local fallback
 
 **Rationale**:
 1. **API Reliability**: Any provider can fail (network, rate limits, outages)
-2. **Cost Optimization**: All free-tier providers
-3. **Quality Fallback**: Gemini (best) ' Groq (fast) ' OpenRouter (free)
-4. **Graceful Degradation**: Local fallback ensures no hard failures
+2. **Redundancy**: Multiple fallback options ensure availability
+3. **Performance Options**: Different providers offer different speed/quality trade-offs
+4. **Graceful Degradation**: Local fallback ensures system functionality
 
-**Real-World Impact**:
-- Day 5: Gemini key malformed ' Groq fallback worked seamlessly
-- Day 6: Deployment testing ' Provider cascade validated
+**Implementation Benefits**:
+- Improved system resilience during development
+- Validated fallback mechanisms during testing
 
 **Implementation**:
 ```python
@@ -1259,4 +1266,3 @@ fi
 **Last Updated**: December 7, 2025
 **Authors**: Built with Claude Code
 **License**: MIT
-

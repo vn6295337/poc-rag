@@ -1,13 +1,32 @@
 """
 Day-3 → Day-4 bridge ingestion script.
 
+Purpose:
+    Runs the full document ingestion pipeline including loading documents, chunking them,
+    generating embeddings, and saving the results to a file. Used for processing documents
+    that will later be uploaded to a vector database.
+
 Pipeline:
 1. Load markdown docs
 2. Chunk them
 3. Generate embeddings (local stub for now)
-4. Emit python dict list that Day-4 will push to vector DB
+4. Save to chunks.jsonl file
 
-Used by upcoming Day-4 Pinecone/Supabase integration.
+Inputs:
+    docs_dir (str): Path to directory containing markdown documents
+    provider (str, optional): Embedding provider (default: "local")
+    dim (int, optional): Embedding dimension (default: 128)
+    save_to (str, optional): Path to save chunks.jsonl file
+
+Outputs:
+    Saves embedded chunks to specified file
+    Returns list of embedded chunks with metadata
+
+Usage:
+    python scripts/ingest_documents.py /path/to/docs [provider] [dim]
+
+Example:
+    python scripts/ingest_documents.py ./sample_docs sentence-transformers 384
 """
 
 import os
@@ -73,7 +92,7 @@ def run_ingestion(docs_dir: str, provider: str = "local", dim: int = 128, save_t
 if __name__ == "__main__":
     import sys
     if len(sys.argv) < 2:
-        print("Usage: python3 run_ingestion.py /path/to/docs [provider] [dim]")
+        print("Usage: python3 scripts/ingest_documents.py /path/to/docs [provider] [dim]")
         raise SystemExit(1)
 
     docs_dir = sys.argv[1]

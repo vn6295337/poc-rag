@@ -1,14 +1,23 @@
-# RAG-document-assistant/ingestion/cli_ingest.py
+# RAG-document-assistant/scripts/test_ingestion.py
 """
 CLI utility for testing ingestion pipeline.
 
-Usage:
-    python ingestion/cli_ingest.py <docs_dir>
+Purpose:
+    Tests the document ingestion pipeline by loading documents, chunking them,
+    and printing summary statistics. Does not generate embeddings or save files.
 
-Performs end-to-end ingestion test:
-1. Loads markdown docs
-2. Chunks them
-3. Prints summary counts
+Inputs:
+    docs_dir (str): Path to directory containing markdown documents
+
+Outputs:
+    Prints document and chunk counts to stdout
+    Displays a sample chunk for verification
+
+Usage:
+    python scripts/test_ingestion.py <docs_dir>
+
+Example:
+    python scripts/test_ingestion.py ./sample_docs
 """
 
 from src.ingestion.load_docs import load_markdown_docs
@@ -19,7 +28,7 @@ import os
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python ingestion/cli_ingest.py <docs_dir>")
+        print("Usage: python scripts/test_ingestion.py <docs_dir>")
         sys.exit(1)
 
     docs_dir = sys.argv[1]

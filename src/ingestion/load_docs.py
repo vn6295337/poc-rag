@@ -18,6 +18,15 @@ import re
 from typing import List, Dict
 
 def _clean_markdown(text: str) -> str:
+    """
+    Clean markdown text by removing code blocks, HTML tags, and other non-content elements.
+    
+    Args:
+        text: Raw markdown text to clean
+        
+    Returns:
+        Cleaned text with markdown syntax removed
+    """
     # Remove code fences and their contents
     text = re.sub(r"```.*?```", " ", text, flags=re.DOTALL)
     # Remove HTML tags
@@ -35,7 +44,23 @@ def load_markdown_docs(dir_path: str, ext: str = ".md", max_chars: int = 20000) 
     """
     Load markdown files from dir_path (non-recursive). Returns list of metadata+clean text.
     Skips files larger than max_chars (useful to enforce 'under 5 pages' rule roughly).
+    
+    Args:
+        dir_path: Path to directory containing markdown files
+        ext: File extension to look for (default: ".md")
+        max_chars: Maximum number of characters to accept (default: 20000)
+        
+    Returns:
+        List of document dictionaries with metadata and cleaned text
+        
+    Raises:
+        FileNotFoundError: If directory does not exist
+        ValueError: If max_chars is not positive
+        OSError: If there are issues reading files
     """
+    if max_chars <= 0:
+        raise ValueError(f"max_chars must be positive, got {max_chars}")
+        
     path = os.path.expanduser(dir_path)
     if not os.path.isdir(path):
         raise FileNotFoundError(f"Directory not found: {path}")
@@ -44,8 +69,21 @@ def load_markdown_docs(dir_path: str, ext: str = ".md", max_chars: int = 20000) 
     files = sorted(glob.glob(pattern))
     docs = []
     for fp in files:
-        with open(fp, "r", encoding="utf-8") as f:
-            raw = f.read()
+        try:
+            with open(fp, "r", encoding="utf-8") as f:
+                raw = f.read()
+        except Exception as e:
+            # Skip files that cannot be read
+            docs.append({
+                "filename": os.path.basename(fp),
+                "path": fp,
+                "text": None,
+                "chars": 0,
+                "words": 0,
+                "status": f"ERROR_READING_FILE: {str(e)}"
+            })
+            continue
+            
         cleaned = _clean_markdown(raw)
         chars = len(cleaned)
         words = len(cleaned.split())

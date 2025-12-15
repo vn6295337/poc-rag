@@ -2,18 +2,32 @@
 """
 Regenerate embeddings using semantic sentence-transformers model.
 
-This script:
+Purpose:
+    Completely regenerates embeddings using the semantic sentence-transformers model,
+    creates a new Pinecone index, and uploads the embeddings. This is a full refresh
+    of the vector database with semantic embeddings.
+
+Process:
 1. Loads documents and chunks them
 2. Generates semantic embeddings (384-dim using all-MiniLM-L6-v2)
 3. Saves to data/chunks_semantic.jsonl
 4. Creates new Pinecone index with 384 dimensions
 5. Uploads semantic embeddings to new index
 
-Usage:
-    python scripts/regenerate_with_semantic.py
+Inputs:
+    None (uses sample_docs directory by default)
+    PINECONE_API_KEY environment variable
+
+Outputs:
+    Saves embedded chunks to data/chunks_semantic.jsonl
+    Creates and populates new Pinecone index
+    Prints progress and completion messages
 
 Environment variables required:
     PINECONE_API_KEY: Your Pinecone API key
+
+Usage:
+    python scripts/regenerate_with_semantic.py
 """
 
 import sys

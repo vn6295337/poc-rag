@@ -1,9 +1,20 @@
-# RAG-document-assistant/src/check_pinecone.py
+# RAG-document-assistant/scripts/check_pinecone.py
 """
 Pinecone connectivity check for pinecone>=5.x SDK.
 
-Reads API key from ~/secrets/pinecone.key and attempts a read-only list of indexes.
-Prints a short summary. Uses the Pinecone class per the new SDK.
+Purpose:
+    Verifies Pinecone connectivity by reading the API key and attempting to list indexes.
+    Useful for initial setup verification and troubleshooting connection issues.
+
+Inputs:
+    Reads API key from ~/secrets/pinecone.key
+
+Outputs:
+    Prints connectivity status and list of available indexes
+    Exits with code 0 for success, non-zero for errors
+
+Usage:
+    python scripts/check_pinecone.py
 """
 
 import os

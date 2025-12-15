@@ -1,11 +1,25 @@
-# RAG-document-assistant/ingestion/search_local.py
+# RAG-document-assistant/scripts/search_documents.py
 """
 Local similarity search (cosine) over embeddings.jsonl.
 
-Usage:
-(aienv) python3 search_local.py /full/path/to/embeddings.jsonl "your query here" --k 3 --dim 64
+Purpose:
+    Performs local similarity search using cosine similarity over pre-generated embeddings.
+    Useful for testing and debugging search functionality without connecting to a vector database.
 
-Outputs top-k results with id, filename, chunk_id, score.
+Inputs:
+    embeddings_path (str): Path to embeddings.jsonl file
+    query (str): Search query text
+    k (int, optional): Number of results to return (default: 3)
+    dim (int, optional): Embedding dimension (default: 64)
+
+Outputs:
+    Prints top-k results with id, filename, chunk_id, and similarity score
+
+Usage:
+    python scripts/search_documents.py /path/to/embeddings.jsonl "query text" [k] [dim]
+
+Example:
+    python scripts/search_documents.py ./data/chunks.jsonl "what is GDPR" 5 384
 """
 
 import sys
@@ -13,7 +27,7 @@ import json
 import math
 from pathlib import Path
 from typing import List
-from embeddings import get_embedding
+from src.ingestion.embeddings import get_embedding
 
 def load_embeddings(path: str):
     path = Path(path)
@@ -60,7 +74,7 @@ def print_results(results):
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Usage: python3 search_local.py /path/to/embeddings.jsonl \"query text\" [k] [dim]")
+        print("Usage: python3 scripts/search_documents.py /path/to/embeddings.jsonl \"query text\" [k] [dim]")
         raise SystemExit(1)
     emb_path = sys.argv[1]
     query = sys.argv[2]
@@ -69,4 +83,3 @@ if __name__ == "__main__":
 
     results = search(emb_path, query, k=k, dim=dim)
     print_results(results)
-

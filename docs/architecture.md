@@ -3,6 +3,7 @@
 > **Version**: 1.0
 > **Last Updated**: December 7, 2025
 > **Project**: RAG-document-assistant
+> **Focus**: Technical system design and components
 
 ---
 
@@ -30,11 +31,16 @@ This RAG (Retrieval-Augmented Generation) proof-of-concept demonstrates a produc
 
 ### Key Characteristics
 
-- **Free Tier Optimized**: Runs entirely on free-tier services ($0/month)
+- **Free Tier Optimized**: Runs entirely on free-tier services
 - **Multi-Provider Resilient**: Automatic fallback across 3 LLM providers
 - **Semantic-First**: Uses sentence-transformers for accurate retrieval
-- **Production-Ready**: Deployed on Hugging Face Spaces with 99%+ uptime
 - **Platform-Agnostic**: Supports local, cloud, and containerized deployments
+
+### Document Purpose
+
+This document provides a detailed technical overview of the RAG system architecture, including design philosophy, component breakdown, data flow, and technology stack. It is intended for developers and architects who need to understand the system's technical structure.
+
+For implementation details, see [Implementation Guide](implement.md). For operational procedures, see [Operations Runbook](run.md).
 
 ---
 
@@ -50,10 +56,10 @@ This RAG (Retrieval-Augmented Generation) proof-of-concept demonstrates a produc
 - Graceful degradation at every layer
 - No single point of failure
 
-### 3. Cost-Effectiveness
-- Free semantic embeddings (sentence-transformers)
-- Free-tier LLM APIs (Gemini, Groq, OpenRouter)
+### 3. Efficiency
+- Lightweight semantic embeddings (sentence-transformers)
 - Efficient vector search with Pinecone serverless
+- Optimized resource utilization
 
 ### 4. Developer Experience
 - Minimal dependencies
@@ -683,48 +689,48 @@ LLM APIs:
 **Decision**: Use sentence-transformers (all-MiniLM-L6-v2) instead of deterministic hashing
 
 **Rationale**:
-- ✓ **Accuracy**: 100% retrieval accuracy vs 0% with hash-based
-- ✓ **Free**: No API costs (local inference)
-- ✓ **Fast**: ~200ms per batch on CPU
-- ✓ **Quality**: Captures semantic meaning, not just text similarity
+- ✓ **Accuracy**: Superior retrieval accuracy vs hash-based approaches
+- ✓ **Local Processing**: No external API dependencies for embeddings
+- ✓ **Performance**: Fast batch processing (~200ms per batch on CPU)
+- ✓ **Semantic Understanding**: Captures meaning, not just text similarity
 
 **Trade-offs**:
-- ✗ **Memory**: ~300MB model size
-- ✗ **Startup**: ~10s cold start time
-- ✓ **Worth it**: Accuracy gain far outweighs costs
+- ✗ **Memory Usage**: ~300MB model size
+- ✗ **Initialization Time**: ~10s cold start time
+- ✓ **Benefit**: Significant accuracy improvement
 
-**Evidence** (from Day 5 testing):
+**Validation Results** (from testing):
 ```
 Hash-based embeddings: 0/5 correct retrievals
-Semantic embeddings: 5/5 correct retrievals (100%)
+Semantic embeddings: 5/5 correct retrievals
 ```
 
 ### 2. Multi-Provider LLM Cascade
 
-**Decision**: Implement automatic fallback across 3 providers
+**Decision**: Implement automatic fallback across multiple providers
 
 **Rationale**:
-- ✓ **Reliability**: No single point of failure
-- ✓ **Cost**: All free-tier providers
-- ✓ **Speed**: Groq provides ultra-fast fallback
-- ✓ **Quality**: Gemini 2.5 Flash as primary (best quality)
+- ✓ **Reliability**: Eliminates single points of failure
+- ✓ **Availability**: Leverages free-tier providers
+- ✓ **Performance**: Fast fallback options available
+- ✓ **Quality**: High-quality primary provider
 
 **Provider Selection**:
 ```
 Gemini 2.5 Flash:
   - Primary choice
-  - Best quality-to-speed ratio
+  - Good quality-to-speed ratio
   - 15 RPM free tier
 
 Groq (llama-3.1-8b):
-  - Fastest inference (~1s)
+  - Fast inference (~1s)
   - 30 RPM free tier
   - Good quality
 
 OpenRouter (Mistral 7B):
   - Backup option
   - Free model tier
-  - Moderate quality
+  - Adequate quality
 ```
 
 ### 3. Pinecone Serverless over Self-Hosted

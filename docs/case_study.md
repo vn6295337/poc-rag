@@ -5,6 +5,7 @@
 > **Project**: RAG-document-assistant
 > **Timeline**: December 1-7, 2025
 > **Status**: Production-Deployed
+> **Focus**: Comprehensive technical case study
 > **Live Demo**: https://huggingface.co/spaces/vn6295337/rag-poc
 
 ---
@@ -29,23 +30,29 @@ Developed a complete RAG pipeline combining:
 
 | Metric | Result | Industry Benchmark |
 |--------|--------|-------------------|
-| **Retrieval Accuracy** | 100% (5/5 test queries) | 70-85% typical |
+| **Retrieval Accuracy** | High (5/5 test queries) | 70-85% typical |
 | **Total Cost** | $0/month | $50-200/month typical |
 | **Development Time** | 7 days | 2-4 weeks typical |
 | **Deployment Success** | 4th platform attempt | Often 1-2 attempts |
 | **Cold Start Time** | 30-60s | 10-30s typical |
 | **Warm Query Latency** | 2-5s | 3-8s typical |
 
-### Business Impact
+### Technical Outcomes
 - ✅ **Production-ready system** deployed and accessible at public URL
 - ✅ **Zero infrastructure costs** leveraging free tiers across the stack
-- ✅ **100% retrieval accuracy** demonstrating viability for enterprise use
-- ✅ **Multi-provider resilience** ensuring 99%+ uptime
-- ✅ **Portable architecture** supporting 5+ deployment platforms
+- ✅ **High retrieval accuracy** demonstrating effectiveness of semantic search
+- ✅ **Multi-provider resilience** ensuring system reliability
+- ✅ **Portable architecture** supporting multiple deployment platforms
 
 ---
 
-## 1. Business Context
+## Document Purpose
+
+This comprehensive case study documents the technical journey of building the RAG system, including problem analysis, requirements, implementation decisions, challenges faced, and technical outcomes. It is intended for architects, technical leads, and developers who want to understand the complete technical story behind the system.
+
+For detailed architecture, see [Architecture](architecture.md). For implementation details, see [Implementation Guide](implement.md).
+
+## 1. Technical Context
 
 ### 1.1 Problem Statement
 

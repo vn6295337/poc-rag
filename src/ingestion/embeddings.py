@@ -66,7 +66,16 @@ def get_embedding(
 
     Returns:
         List of floats representing the embedding vector
+        
+    Raises:
+        ValueError: If provider is unknown or text is empty
+        ImportError: If required dependencies are not installed
+        NotImplementedError: If provider is not yet implemented
+        Exception: If embedding generation fails
     """
+    if not text:
+        raise ValueError("text cannot be empty")
+        
     provider = provider.lower()
 
     if provider == "local":
@@ -74,8 +83,11 @@ def get_embedding(
 
     elif provider == "sentence-transformers":
         model = _get_sentence_transformer_model(model_name or "all-MiniLM-L6-v2")
-        embedding = model.encode(text, convert_to_numpy=True)
-        return embedding.tolist()
+        try:
+            embedding = model.encode(text, convert_to_numpy=True)
+            return embedding.tolist()
+        except Exception as e:
+            raise RuntimeError(f"Failed to generate embedding with sentence-transformers: {str(e)}")
 
     elif provider in ("openai", "claude"):
         raise NotImplementedError(f"Provider '{provider}' is not configured yet.")
@@ -91,21 +103,49 @@ def batch_embed_chunks(
 ) -> List[Dict]:
     """
     Batch embed multiple chunks.
-
+    
     Args:
         chunks: List of dicts with "filename", "chunk_id", "text", "chars"
         provider: Embedding provider
         dim: Dimension for local embeddings
         model_name: Optional model name for sentence-transformers
-
+        
     Returns:
         List of dicts with "filename", "chunk_id", "embedding", "chars"
+        
+    Raises:
+        TypeError: If chunks is not a list or contains non-dict elements
+        KeyError: If required keys are missing from chunk dictionaries
+        ValueError: If provider is unknown or dim is not positive
+        ImportError: If required dependencies are not installed
     """
+    if not isinstance(chunks, list):
+        raise TypeError("chunks must be a list")
+        
+    # Validate chunks
+    for i, c in enumerate(chunks):
+        if not isinstance(c, dict):
+            raise TypeError(f"Chunk {i} is not a dictionary")
+        required_keys = ["filename", "chunk_id", "text", "chars"]
+        for key in required_keys:
+            if key not in c:
+                raise KeyError(f"Chunk {i} missing required key: {key}")
+                
+    if dim <= 0:
+        raise ValueError(f"dim must be positive, got {dim}")
+        
     # For sentence-transformers, batch encoding is more efficient
     if provider == "sentence-transformers":
         texts = [c["text"] for c in chunks]
         model = _get_sentence_transformer_model(model_name or "all-MiniLM-L6-v2")
-        embeddings = model.encode(texts, convert_to_numpy=True, show_progress_bar=True)
+        try:
+            embeddings = model.encode(texts, convert_to_numpy=True, show_progress_bar=True)
+        except Exception as e:
+            raise RuntimeError(f"Failed to encode texts with sentence-transformers: {str(e)}")
+            
+        # Validate embeddings shape
+        if len(embeddings) != len(texts):
+            raise RuntimeError(f"Embedding count mismatch: expected {len(texts)}, got {len(embeddings)}")
 
         out = []
         for i, c in enumerate(chunks):
@@ -120,13 +160,16 @@ def batch_embed_chunks(
     # For other providers, embed one at a time
     out = []
     for c in chunks:
-        emb = get_embedding(c["text"], provider=provider, dim=dim, model_name=model_name)
-        out.append({
-            "filename": c["filename"],
-            "chunk_id": c["chunk_id"],
-            "embedding": emb,
-            "chars": c["chars"]
-        })
+        try:
+            emb = get_embedding(c["text"], provider=provider, dim=dim, model_name=model_name)
+            out.append({
+                "filename": c["filename"],
+                "chunk_id": c["chunk_id"],
+                "embedding": emb,
+                "chars": c["chars"]
+            })
+        except Exception as e:
+            raise RuntimeError(f"Failed to embed chunk {c['chunk_id']} from {c['filename']}: {str(e)}")
     return out
 
 if __name__ == "__main__":

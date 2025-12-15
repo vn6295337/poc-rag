@@ -1,7 +1,19 @@
-# RAG-document-assistant/src/check_index_meta.py
+# RAG-document-assistant/scripts/check_index_metadata.py
 """
 Check Pinecone index metadata using pinecone>=5.x SDK.
-Ensures dimension and metric match your ingestion pipeline.
+
+Purpose:
+    Checks and displays metadata for the configured Pinecone index, including dimensions,
+    metric type, and vector count. Ensures the index configuration matches the ingestion pipeline.
+
+Inputs:
+    Uses configuration from src.config (PINECONE_API_KEY, PINECONE_INDEX_NAME)
+
+Outputs:
+    Prints index metadata and statistics to stdout
+
+Usage:
+    python scripts/check_index_metadata.py
 """
 
 import os

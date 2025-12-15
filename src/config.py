@@ -12,7 +12,18 @@ except ImportError:
     _HAS_STREAMLIT = False
 
 def get_required(key: str) -> str:
-    """Get required config value from environment or Streamlit secrets"""
+    """
+    Get required config value from environment or Streamlit secrets.
+    
+    Args:
+        key: Configuration key to retrieve
+        
+    Returns:
+        Configuration value
+        
+    Raises:
+        RuntimeError: If key is not found in any configuration source
+    """
     # Try Streamlit secrets first (for Streamlit Cloud)
     if _HAS_STREAMLIT and hasattr(st, 'secrets'):
         try:
@@ -28,7 +39,16 @@ def get_required(key: str) -> str:
     return value
 
 def get_optional(key: str, default=None):
-    """Get optional config value from environment or Streamlit secrets"""
+    """
+    Get optional config value from environment or Streamlit secrets.
+    
+    Args:
+        key: Configuration key to retrieve
+        default: Default value if key is not found
+        
+    Returns:
+        Configuration value or default
+    """
     # Try Streamlit secrets first
     if _HAS_STREAMLIT and hasattr(st, 'secrets'):
         try:

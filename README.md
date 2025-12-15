@@ -8,6 +8,12 @@
 
 ---
 
+## 📁 Project Structure
+
+For a complete overview of the project directory structure, see:
+- [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) - Detailed breakdown of all files and folders
+- [DIRECTORY_TREE.md](DIRECTORY_TREE.md) - Simplified tree view of the directory structure
+
 ## ✨ Key Results & Value Proposition
 
 This PoC was developed to demonstrate cost-effective, high-accuracy RAG system that overcomes common implementation challenges.
@@ -321,19 +327,30 @@ The configuration system supports:
 4. **Docker provides portability** - Works across all platforms
 5. **Configuration flexibility critical** - Different platforms, different secrets
 
-
 ---
 
-## ✨ Full Documentation
+## 📚 Complete Documentation
 
-For a deep dive into the system's development journey, design decisions, and testing, please consult the full documentation:
+For a comprehensive understanding of the RAG Document Assistant, we provide documentation tailored to different audiences and purposes:
 
-### Core Documentation
-- **[case_study.pdf](case_study.pdf)** - Business Context, Metrics & Executive Summary
-- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Cloud Run deployment guide
-- **[README_HF_DEPLOYMENT.md](README_HF_DEPLOYMENT.md)** - Hugging Face Spaces deployment (recommended)
-- **[STREAMLIT_DEPLOYMENT.md](STREAMLIT_DEPLOYMENT.md)** - Streamlit Cloud deployment
-- **[LOCAL_TEST_RESULTS.md](LOCAL_TEST_RESULTS.md)** - Testing documentation and results
+### For Business Stakeholders
+- **[Business-Focused Overview](README_BUSINESS.md)** - Explains the system's business value and applications
+
+### For Developers & Technical Teams
+- **[Technical Implementation](docs/implement.md)** - Deep dive into the technical architecture
+- **[Deployment Guide](DEPLOYMENT.md)** - Instructions for deploying the system
+- **[Operations Runbook](docs/run.md)** - Detailed operational procedures
+- **[Architecture Documentation](docs/architecture.md)** - Complete system architecture details
+
+### For Project Insights
+- **[Case Study](docs/case_study.md)** - Detailed analysis of the development process and results
+- **[Test Results](docs/test_results.md)** - Comprehensive testing documentation and results
+- **[Project Summary](docs/project_summary.md)** - High-level project overview and outcomes
+
+### Platform-Specific Deployment Guides
+- **[Hugging Face Spaces](README_HF_DEPLOYMENT.md)** - Deployment guide for Hugging Face (recommended)
+- **[Cloud Run](DEPLOYMENT.md)** - Google Cloud Run deployment guide
+- **[Streamlit Cloud](STREAMLIT_DEPLOYMENT.md)** - Streamlit Cloud deployment guide
 
 ### Project Structure
 See the [Project Structure](#-project-structure) section above for detailed file organization.

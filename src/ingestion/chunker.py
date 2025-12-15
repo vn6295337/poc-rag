@@ -15,7 +15,25 @@ def chunk_text(
     """
     Simple whitespace-based chunking.
     Assumes ~1 token ≈ 4 chars (rough approximation).
+    
+    Args:
+        text: Text to chunk
+        max_tokens: Maximum tokens per chunk
+        overlap: Number of tokens to overlap between chunks
+        
+    Returns:
+        List of text chunks
+        
+    Raises:
+        ValueError: If max_tokens or overlap are not positive
     """
+    if max_tokens <= 0:
+        raise ValueError(f"max_tokens must be positive, got {max_tokens}")
+    if overlap < 0:
+        raise ValueError(f"overlap must be non-negative, got {overlap}")
+    if overlap >= max_tokens:
+        raise ValueError(f"overlap ({overlap}) must be less than max_tokens ({max_tokens})")
+        
     approx_chars = max_tokens * 4
     approx_overlap = overlap * 4
 
@@ -32,23 +50,37 @@ def chunk_text(
 
         # next window with overlap
         start = start + approx_chars - approx_overlap
+        # Ensure we don't go backwards
+        if start <= 0:
+            start = approx_chars
 
     return chunks
 
 
 def chunk_documents(docs: List[Dict], max_tokens: int = 300, overlap: int = 50):
     """
-    docs = [{ filename, text, ... }]
-    returns list of:
-    {
-      "filename": ...,
-      "chunk_id": int,
-      "text": ...,
-      "chars": int
-    }
+    Chunk a list of documents into smaller pieces for embedding.
+    
+    Args:
+        docs: List of document dictionaries with 'filename' and 'text' keys
+        max_tokens: Maximum tokens per chunk
+        overlap: Number of tokens to overlap between chunks
+        
+    Returns:
+        List of chunk dictionaries with filename, chunk_id, text, and chars keys
+        
+    Raises:
+        TypeError: If docs is not a list or contains non-dict elements
+        KeyError: If required keys are missing from document dictionaries
     """
+    if not isinstance(docs, list):
+        raise TypeError("docs must be a list")
+        
     all_chunks = []
     for d in docs:
+        if not isinstance(d, dict):
+            raise TypeError("Each document must be a dictionary")
+            
         if d.get("status") != "OK":
             continue
 
